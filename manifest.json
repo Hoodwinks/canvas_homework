@@ -1,14 +1,14 @@
 {
-  "domain": "canvas",
-  "name": "Canvas",
+  "domain": "canvas Homework",
+  "name": "Canvas Homework",
   "config_flow": true,
   "dependencies": ["frontend", "http"],
-  "documentation": "https://github.com/thomergil/canvas_hassio",
-  "issue_tracker": "https://github.com/thomergil/canvas_hassio/issues",
+  "documentation": "https://github.com/Hoodwinks/canvas_homework",
+  "issue_tracker": "https://github.com/Hoodwinks/canvas_homework/issues",
   "requirements": [
-    "canvas_parent_api @ git+https://github.com/thomergil/canvas_parent_api.git@master"
+    "canvas_parent_api @ git+https://github.com/Hoodwinks/canvas_parent_api.git@master"
   ],
-  "codeowners": ["@thomergil"],
+  "codeowners": ["@Hoodwinks"],
   "iot_class": "cloud_polling",
-  "version": "0.1.0"
+  "version": "0.2.0"
 }
