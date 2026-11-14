@@ -1,5 +1,5 @@
 {
-  "domain": "canvas Homework",
+  "domain": "canvas",
   "name": "Canvas Homework",
   "config_flow": true,
   "dependencies": ["frontend", "http"],
