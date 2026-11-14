@@ -58,25 +58,45 @@ class CanvasConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
+    async def async_step_reconfigure(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Let the user update the Canvas URL / API token."""
+        entry = self._get_reconfigure_entry()
+
+        if user_input is not None:
+            return self.async_update_reload_and_abort(
+                entry, data_updates=user_input
+            )
+
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_BASEURI, default=entry.data.get(CONF_BASEURI, "")
+                    ): str,
+                    vol.Required(CONF_SECRET): str,
+                }
+            ),
+        )
 
     @staticmethod
     @callback
     def async_get_options_flow(config_entry: config_entries.ConfigEntry) -> config_entries.OptionsFlow:
         """Create the options flow."""
-        return OptionsFlowHandler(config_entry)
+        return OptionsFlowHandler()
+
 
 class OptionsFlowHandler(config_entries.OptionsFlow):
     """Options Flow Class"""
-    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
-        """Initialize options flow."""
-        self.config_entry = config_entry
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Manage the options."""
         if user_input is not None:
-            _LOGGER.warn("init options flow handler no user input")
+            _LOGGER.warning("init options flow handler no user input")
             return self.async_create_entry(title=NAME, data=user_input)
 
         return self.async_show_form(
@@ -85,15 +105,15 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                 {
                     vol.Required(
                         CONF_SEMAPHORE,
-                        default = self.config_entry.options.get(CONF_SEMAPHORE, DEFAULT_SEMAPHORE),
-                        description = {
+                        default=self.config_entry.options.get(CONF_SEMAPHORE, DEFAULT_SEMAPHORE),
+                        description={
                             CONF_SEMAPHORE: "The Semaphore is the number of concurrent requests to send to the Canvas API. Since Canvas rate-limits requests, it is recommended to keep this number low (max 15) to prevent rate limiting."
                         }
                     ): int,
                     vol.Optional(
                         CONF_DISABLE_PERSISTENCE,
-                        default = self.config_entry.options.get(CONF_DISABLE_PERSISTENCE, DEFAULT_DISABLE_PERSISTENCE),
-                        description = {
+                        default=self.config_entry.options.get(CONF_DISABLE_PERSISTENCE, DEFAULT_DISABLE_PERSISTENCE),
+                        description={
                             CONF_DISABLE_PERSISTENCE: "Disable persistent storage for homework events. When enabled, the integration will work with raw Canvas data only and won't remember previously seen assignments across restarts. Useful for debugging or if you prefer not to use caching."
                         }
                     ): bool
