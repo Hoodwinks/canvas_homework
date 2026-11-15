@@ -20,6 +20,11 @@ JSMODULES: Final[list[dict[str, str]]] = [
         "filename": "custom-canvas-homework-card.js",
         "version": INTEGRATION_VERSION,
     },
+    {
+        "name": "Canvas Homework Dashboard",
+        "filename": "custom-canvas-homework-dashboard.js",
+        "version": INTEGRATION_VERSION,
+    },
 ]
 
 HA_SENSOR = ["sensor"]

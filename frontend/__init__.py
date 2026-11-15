@@ -12,7 +12,9 @@ from ..const import DOMAIN, INTEGRATION_VERSION
 _LOGGER = logging.getLogger(__name__)
 
 CARD_JS = "custom-canvas-homework-card.js"
+DASHBOARD_JS = "custom-canvas-homework-dashboard.js"
 CARD_URL = f"/{DOMAIN}/{CARD_JS}"
+DASHBOARD_URL = f"/{DOMAIN}/{DASHBOARD_JS}"
 
 
 async def async_setup_view(hass: HomeAssistant) -> None:
@@ -61,3 +63,19 @@ async def async_setup_view(hass: HomeAssistant) -> None:
                         "url": resource_url,
                     }
                 )
+    
+    # Also register the dashboard card as a lovelace resource  
+    dashboard_loaded = False
+    for r in resources.async_items():
+        if r["url"].startswith(DASHBOARD_URL):
+            dashboard_loaded = True
+            break
+    
+    if not dashboard_loaded:
+        if getattr(resources, "async_create_item", None):
+            await resources.async_create_item(
+                {
+                    "res_type": "module",
+                    "url": DASHBOARD_URL + "?automatically-added&" + INTEGRATION_VERSION,
+                }
+            )
