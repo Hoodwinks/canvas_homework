@@ -6,9 +6,9 @@ import { unsafeHTML } from 'https://unpkg.com/lit-html@latest/directives/unsafe-
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: 'canvas-homework-dashboard',
-  name: 'Canvas Homework Dashboard',
+  name: 'Canvas - Homework Dashboard',
   preview: true,
-  description: 'A dashboard card displaying Canvas homework with interactive toggles.',
+  description: 'An enhanced canvas card with interactive toggle features.',
 });
 
 class CanvasHomeworkDashboard extends LitElement {

@@ -6,9 +6,9 @@ import { unsafeHTML } from 'https://unpkg.com/lit-html@latest/directives/unsafe-
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: 'canvas-homework',
-  name: 'Canvas - Homework Card',
+  name: 'Canvas - Legacy Card',
   preview: false,
-  description: 'A card used to display Canvas Homework.',
+  description: 'An older canvas card display for compatibility.',
 });
 
 class CanvasStudent extends LitElement {
